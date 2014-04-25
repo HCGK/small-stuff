@@ -1,7 +1,10 @@
 import java.awt.Point;
 
-public abstract class LeftHandM {
+public class LeftHandM {
 	private static final int[][] MOVEMENT = {{0,1},{1,0},{0,-1},{-1,0}};
+	
+	private LHdM_Test map;
+	
 	private int boundX;
 	private int boundY;
 	
@@ -9,20 +12,41 @@ public abstract class LeftHandM {
 	private Point startP;
 	private int CrossingsOfNeg_xAxis;
 	
-	LeftHandM(int bound){
-		constuctor(bound, bound);
+	LeftHandM(int bound, LHdM_Test map){
+		constuctor(bound, bound, map);
 	}
-	LeftHandM(int boundX, int boundY) {
-		constuctor(boundX, boundY);
+	LeftHandM(int boundX, int boundY,LHdM_Test map) {
+		constuctor(boundX, boundY, map);
 	}
 	
-	private void constuctor(int bX, int bY) {
+	private void constuctor(int bX, int bY, LHdM_Test m) {
 		boundX = bX;
 		boundY = bY;
+		map = m;
 	}
 	
-	private void tester(){
-		
+	int tester(){
+		for(xMax =0; xMax < boundX; xMax ++){
+			if(traversable(xMax,0) == 1){
+				startP = new Point(xMax, 0);
+				int i = Itrr(startP,1);
+				if(i == 0)
+					System.out.println("Island " + startP.x +" : " + xMax);
+				else if (i == 1){
+					System.out.println("loop "+ startP.x +" : " + xMax);
+					return 1;
+				}
+				else if (i == 2){
+					System.out.println("path "+ startP.x +" : " + xMax);
+					return 2;
+				}
+				else if (i == 3)
+					System.out.println("point " + xMax);
+			}
+			else
+				System.out.println("boat " + xMax);
+		}
+		return 4;
 	}
 	/*
 	 * assumes p is traversable
@@ -52,19 +76,27 @@ public abstract class LeftHandM {
 	}
 	
 	private void tests(Point p, Point q) {
+		System.out.println(q);
 		if(q.x == 0){
 			xMax = Math.max(q.y,xMax);
-			if(p.x == 1 && q.y<0)
+			if(p.x == 1 && q.y<0){
 				CrossingsOfNeg_xAxis ++;
+				System.out.println("X");
+			}
 		}
-		else if(q.x == 1 && p.x == 0 && q.y<0);
-		CrossingsOfNeg_xAxis ++;
+		else if(q.x == 1 && p.x == 0 && q.y<0){
+			CrossingsOfNeg_xAxis ++;
+			System.out.println("+");
+		}
 	}
 	
 	private int traversable(Point p) {
-		if(Math.abs(p.x) > boundX || Math.abs(p.y) > boundY)
-			return 2;
+		return traversable(p.x, p.y);
+	}
+	private int traversable(int x, int y){
+		if(Math.abs(x) > boundX || Math.abs(y) > boundY)
+			return 3;
 		else 
-			return 2;
+			return map.readMap(x, y);
 	}
 }
