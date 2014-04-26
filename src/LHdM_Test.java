@@ -20,7 +20,7 @@ public class LHdM_Test extends JPanel {
 	
 	public static void main (String[] args){
 		LHdM_Test panel = new LHdM_Test(I,J);
-		L = new LeftHandM(I,J,panel);
+		L = new LeftHandM(I,J);
 		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +77,7 @@ public class LHdM_Test extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getY() > 16*m){
 				System.out.println ("Begin");
-				System.out.println ("Test " + L.tester());
+				System.out.println ("Test " + L.tester(LHdM_Test.this));
 			}
 			else{
 				map[e.getX()/16][e.getY()/16] = !map[e.getX()/16][e.getY()/16];

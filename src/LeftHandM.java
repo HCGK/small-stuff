@@ -8,48 +8,49 @@ public class LeftHandM {
 	private int boundX;
 	private int boundY;
 	
-	private int xMax = 0;
+	private int yMax = 0;
 	private Point startP;
 	private int CrossingsOfNeg_xAxis;
 	
-	LeftHandM(int bound, LHdM_Test map){
-		constuctor(bound, bound, map);
+	LeftHandM(int bound){
+		constuctor(bound, bound);
 	}
-	LeftHandM(int boundX, int boundY,LHdM_Test map) {
-		constuctor(boundX, boundY, map);
+	LeftHandM(int boundX, int boundY) {
+		constuctor(boundX, boundY);
 	}
 	
-	private void constuctor(int bX, int bY, LHdM_Test m) {
+	private void constuctor(int bX, int bY) {
 		boundX = bX;
 		boundY = bY;
-		map = m;
 	}
 	
-	int tester(){
-		for(xMax =0; xMax < boundX; xMax ++){
-			if(traversable(xMax,0) == 1){
-				startP = new Point(xMax, 0);
-				int i = Itrr(startP,1);
+	int tester(LHdM_Test map){
+		this.map = map;
+		CrossingsOfNeg_xAxis = 0;
+		for(yMax =0; yMax < boundY; yMax ++){
+			if(traversable(0, yMax) == 1){
+				startP = new Point(0, yMax);
+				int i = Itrr(startP, 0);
 				if(i == 0)
-					System.out.println("Island " + startP.x +" : " + xMax);
+					System.out.println("Island " + startP.y +" : " + yMax);
 				else if (i == 1){
-					System.out.println("loop "+ startP.x +" : " + xMax);
+					System.out.println("loop "+ startP.y +" : " + yMax);
 					return 1;
 				}
 				else if (i == 2){
-					System.out.println("path "+ startP.x +" : " + xMax);
+					System.out.println("path "+ startP.y +" : " + yMax);
 					return 2;
 				}
 				else if (i == 3)
-					System.out.println("point " + xMax);
+					System.out.println("point " + yMax);
 			}
 			else
-				System.out.println("boat " + xMax);
+				System.out.println("boat " + yMax);
 		}
 		return 4;
 	}
 	/*
-	 * assumes p is traversable
+	 * assumes p is traversble
 	 * 
 	 * returns 0 for islands
 	 * 	 	   1 for a loop
@@ -78,7 +79,7 @@ public class LeftHandM {
 	private void tests(Point p, Point q) {
 		System.out.println(q);
 		if(q.x == 0){
-			xMax = Math.max(q.y,xMax);
+			yMax = Math.max(q.y,yMax);
 			if(p.x == 1 && q.y<0){
 				CrossingsOfNeg_xAxis ++;
 				System.out.println("X");
@@ -94,8 +95,10 @@ public class LeftHandM {
 		return traversable(p.x, p.y);
 	}
 	private int traversable(int x, int y){
-		if(Math.abs(x) > boundX || Math.abs(y) > boundY)
-			return 3;
+		if(Math.abs(x) > boundX || Math.abs(y) > boundY){
+			System.out.println("||");
+			return 2;
+		}
 		else 
 			return map.readMap(x, y);
 	}
