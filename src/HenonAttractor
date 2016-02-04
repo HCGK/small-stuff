@@ -1,0 +1,42 @@
+import java.io.IOException;
+import java.io.PrintStream;
+
+Class HenonAttractor(){
+
+    public static main()throws IOException{
+        public static void main
+        String fileName = "C://HenonAttractor"
+        if(args.length != 0){
+            fileName = args[1];
+        }
+        points = henonAttator(3000)
+        printPoints(fileName, points);
+    }
+    
+    /* find points from a given x and y
+     */
+    public double[] henonAttator(int numberOfSteps, double a, double b){
+        double[][] points = new double[number of steps][2]
+        // start x y randomly in 1,-1
+        points[0][0] = 1.1;
+        points[0][1] = 1.0;
+        for(i = 0; i<points.length; i++){
+            int nextX = 1-a*points[i][0]+points[i][1];
+            points[i][1] = b*points[0][0];
+            points[i][0] = nextX;
+        }
+        return points;
+    }
+    public double[] henonAttator(int numberOfSteps){
+        //overLoads henonAttator to provide defult values for a and b
+        return henonAttator(numberOfSteps, 1.4, 0.3);
+    }
+    
+    private static void printPoints(String fileName, double[][] points)throws IOException{
+        PrintStream doc = new PrintStream(fileName);
+        for(double[] line: points){
+            //print takes a string argument so we used the string builder in the call function
+            doc.println(line[0] +","+ line[1])
+        }
+    }
+}
