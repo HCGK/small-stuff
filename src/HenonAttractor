@@ -20,8 +20,8 @@ public class HenonAttractor{
         points[0][0] = 1.1;
         points[0][1] = 1.0;
         for(int i = 1; i<points.length; i++){
+            points[i][0] = 1-a*points[i-1][0]*points[i-1][0]+points[i-1][1];
             points[i][1] = b*points[i-1][0];
-            points[i][0] = 1-a*points[i-1][0]+points[i-1][1];
         }
         return points;
     }
